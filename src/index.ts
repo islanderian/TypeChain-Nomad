@@ -2,21 +2,29 @@
 import * as CryptoJS from "crypto-js"; // 해쉬 함수를 통해 암호하를 할 수 있도록 해주는 패키지
 
 class Block {
-  public index: number;
-  public hash: string;
-  public previousHash: string;
-  public data: string;
-  public timestamp: number;
-
   // static method, 클래스가 생성되지 않았어도 클래스 안에서 호출할 수 있는 method
+  // Hash 생성 후 리턴
   static calculateBlockHash = (
     index: number,
     previousHash: string,
     timestamp: number,
     data: string
-  ): string => {
-    return CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
-  };
+  ): string =>
+    CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
+
+  // 유효성 검사
+  static validateStructure = (aBlock): boolean =>
+    typeof aBlock.index === "number" &&
+    typeof aBlock.hash === "string" &&
+    typeof aBlock.previousHash === "string" &&
+    typeof aBlock.data === "string" &&
+    typeof aBlock.timestamp === "number";
+
+  public index: number;
+  public hash: string;
+  public previousHash: string;
+  public data: string;
+  public timestamp: number;
 
   constructor(
     index: number,
@@ -62,6 +70,16 @@ const createNewBlock = (data: string): Block => {
     newTimestamp
   );
   return newBlock;
+};
+
+const isBlockVaild = (candidateBlock: Block, previousBlock: Block): boolean => {
+  if (!Block.validateStructure(candidateBlock)) {
+    return false;
+  } else if (previousBlock.index + 1 !== candidateBlock.index) {
+    return false;
+  } else if (previousBlock.hash !== candidateBlock.previousHash) {
+    return false;
+  }
 };
 
 console.log(createNewBlock("hello"), createNewBlock("bye bye"));
