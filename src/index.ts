@@ -54,7 +54,7 @@ const getNewTimeStamp = (): number => Math.round(new Date().getTime() / 1000);
 
 const createNewBlock = (data: string): Block => {
   const previousBlock: Block = getLatestBlock();
-  const newIndex: number = previousBlock.index++;
+  const newIndex: number = previousBlock.index + 1;
   const newTimestamp: number = getNewTimeStamp();
   const newHash: string = Block.calculateBlockHash(
     newIndex,
@@ -72,6 +72,16 @@ const createNewBlock = (data: string): Block => {
   return newBlock;
 };
 
+// Block 의 Hash 얻는 함수
+const getHashforBlock = (aBlock: Block): string =>
+  Block.calculateBlockHash(
+    aBlock.index,
+    aBlock.previousHash,
+    aBlock.timestamp,
+    aBlock.data
+  );
+
+// 새로운 Block 유효성 검사
 const isBlockVaild = (candidateBlock: Block, previousBlock: Block): boolean => {
   if (!Block.validateStructure(candidateBlock)) {
     return false;
@@ -79,9 +89,18 @@ const isBlockVaild = (candidateBlock: Block, previousBlock: Block): boolean => {
     return false;
   } else if (previousBlock.hash !== candidateBlock.previousHash) {
     return false;
+  } else if (getHashforBlock(candidateBlock) !== candidateBlock.hash) {
+    return false;
+  } else {
+    return true;
   }
 };
 
-console.log(createNewBlock("hello"), createNewBlock("bye bye"));
+// Block 추가
+const addBlock = (candidateBlock: Block): void => {
+  if (isBlockVaild(candidateBlock, getLatestBlock())) {
+    blockchain.push(candidateBlock);
+  }
+};
 
 export {};
