@@ -1,0 +1,25 @@
+{
+  "name": "typechain-nomad",
+  "version": "1.0.0",
+  "description": "노마드코더 - Typescript 로 블로체인 만들기 수업",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "prestart": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/islanderian/TypeChain-Nomad.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/islanderian/TypeChain-Nomad/issues"
+  },
+  "homepage": "https://github.com/islanderian/TypeChain-Nomad#readme",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
