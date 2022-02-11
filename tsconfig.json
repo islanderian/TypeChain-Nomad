@@ -1,10 +1,11 @@
-//typescript 기본 셋업
+// typescript 기본 셋업
 {
   "compilerOptions": {
     "module": "commonjs",
     "target": "ES2015",
-    "sourceMap": true
+    "sourceMap": true,
+    "outDir": "dist" //output 폴더
   },
-  "include": ["index.ts"],
+  "include": ["src/**/*"], //srt 폴더 안의 모든 파일을 포함
   "exclude": ["node_modules"]
 }
